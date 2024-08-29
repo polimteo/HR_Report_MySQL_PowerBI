@@ -1,6 +1,6 @@
-HR Employees Report
+Employees Distribution Report
 -
-This report presents the distribution of HR employees from 2000 to 2020, based on over 22,000 data points.
+This report presents the distribution of employees from 2000 to 2020, based on over 22,000 data points.
 
 ![image](https://github.com/user-attachments/assets/8842594f-8d79-44ad-9438-80c382c70f82)
 
