@@ -16,14 +16,14 @@ ORDER BY count(*) DESC;
 -- 3. What is the age distribution of employees in the company?
 SELECT 
 	min(age) as youngest,
-    max(age) as oldest
+    	max(age) as oldest
 FROM hr
 WHERE termdate = '0000-00-00';
 
 -- group by age 
 SELECT
 	CASE
-		WHEN age BETWEEN 18 AND 24 THEN '18-24'
+	WHEN age BETWEEN 18 AND 24 THEN '18-24'
         WHEN age BETWEEN 25 AND 34 THEN '25-34'
         WHEN age BETWEEN 35 AND 44 THEN '35-44'
         WHEN age BETWEEN 45 AND 54 THEN '45-54'
@@ -39,7 +39,7 @@ ORDER BY age_group;
 -- group by age and gender
 SELECT
 	CASE
-		WHEN age BETWEEN 18 AND 24 THEN '18-24'
+	WHEN age BETWEEN 18 AND 24 THEN '18-24'
         WHEN age BETWEEN 25 AND 34 THEN '25-34'
         WHEN age BETWEEN 35 AND 44 THEN '35-44'
         WHEN age BETWEEN 45 AND 54 THEN '45-54'
@@ -87,13 +87,12 @@ SELECT
     total_terminated,
     ROUND((total_terminated/total_employees * 100), 2) AS turnover_rate
 FROM (
-		SELECT department, COUNT(*) AS total_employees,
-        SUM(
-			CASE WHEN termdate <> '0000-00-00' AND termdate <= CURDATE() THEN 1
-			ELSE 0
-            END
-            ) AS total_terminated
-		FROM hr
+	SELECT department, COUNT(*) AS total_employees,
+        SUM(CASE 
+		WHEN termdate <> '0000-00-00' AND termdate <= CURDATE() THEN 1
+		ELSE 0
+            END) AS total_terminated
+	FROM hr
         GROUP BY department
 	) as subquery
 ORDER BY turnover_rate DESC;
@@ -113,17 +112,16 @@ SELECT
     total_terminations,
     (total_hires - total_terminations) AS differences,
     ROUND((total_hires - total_terminations)/total_hires * 100, 2) AS differences_percent
-FROM (
-	SELECT YEAR(hire_date) AS year,
+FROM (SELECT YEAR(hire_date) AS year,
     COUNT(*) as total_hires,
     SUM(
-		CASE WHEN termdate <> '0000-00-00' AND termdate <= CURDATE() THEN 1
+	CASE 
+	WHEN termdate <> '0000-00-00' AND termdate <= CURDATE() THEN 1
         ELSE 0
-        END
-    ) AS total_terminations
+        END) AS total_terminations
 	FROM hr
-    GROUP BY YEAR(hire_date)
-) AS subquery
+    	GROUP BY YEAR(hire_date)
+	) AS subquery
 ORDER BY year ASC;
 	
 
